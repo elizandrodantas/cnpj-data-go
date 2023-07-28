@@ -1,9 +1,3 @@
-<div align="center">
-    <a style="text-decoration: none" href="https://dados.gov.br/dados/conjuntos-dados/cadastro-nacional-da-pessoa-juridica---cnpj">
-        <img src="https://dados.gov.br/api/publico/s3/3d5291f3-9259-469d-959d-9ca91ad03563.jpg" alt="ministerio da fazenda" width="100" heigth="100" />
-    </a>
-</div>
-
 <br/>
 
 <h1 align="center">
@@ -67,7 +61,7 @@ Nenhuma das flags é obrigatória. Caso você não forneça nenhuma delas, o pro
 
 ## Contribuindo
 
-Se você deseja contribuir com melhorias, correções de bugs ou novas funcionalidades, fique à vontade para enviar um pull request. Estamos ansiosos para analisar e discutir suas contribuições!
+Se você deseja contribuir com melhorias, correções de bugs ou novas funcionalidades, fique à vontade para enviar um pull request.
 
 ## Licença
 
