@@ -1,8 +1,8 @@
 package database
 
-const (
-	CREATE_TABLES = `
-		CREATE TABLE IF NOT EXISTS empresas (
+var (
+	CREATE_TABLES = []string{
+		`CREATE TABLE IF NOT EXISTS empresas (
 			cnpj_basico VARCHAR(8) NOT NULL,
 			razao_social VARCHAR(255),
 			natureza VARCHAR(10),
@@ -10,9 +10,8 @@ const (
 			capital_social VARCHAR(50),
 			porte_empresa VARCHAR(3),
 			ente_federativo_resp VARCHAR(255)
-		);
-
-		CREATE TABLE IF NOT EXISTS estabelecimentos (
+		)`,
+		`CREATE TABLE IF NOT EXISTS estabelecimentos (
 			cnpj_basico VARCHAR(8) NOT NULL,
 			cnpj_ordem VARCHAR(4),
 			cnpj_dv VARCHAR(2),
@@ -43,9 +42,8 @@ const (
 			correio_eletronico VARCHAR(255),
 			situacao_especial VARCHAR(255),
 			data_situacao_especial VARCHAR(8)
-		);
-
-		CREATE TABLE IF NOT EXISTS simples (
+		);`,
+		`CREATE TABLE IF NOT EXISTS simples (
 			cnpj_basico VARCHAR(8) NOT NULL,
 			opcao_simples VARCHAR(11),
 			data_opcao_simples VARCHAR(8),
@@ -53,9 +51,8 @@ const (
 			opcao_mei VARCHAR(11),
 			data_opcao_mei VARCHAR(8),
 			data_exclusao_mei VARCHAR(8)
-		);
-
-		CREATE TABLE IF NOT EXISTS socios (
+		);`,
+		`CREATE TABLE IF NOT EXISTS socios (
 			cnpj_basico VARCHAR(8) NOT NULL,
 			identificador_socio VARCHAR(1),
 			nome VARCHAR(255),
@@ -67,49 +64,47 @@ const (
 			nome_representante_legal VARCHAR(255),
 			qualificacao_representante_legal VARCHAR(5),
 			faixa_etaria VARCHAR(5)
-		);
-
-		CREATE TABLE IF NOT EXISTS paises (
+		);`,
+		`CREATE TABLE IF NOT EXISTS paises (
 			codigo VARCHAR(11),
 			descricao VARCHAR(255)
-		);
-
-		CREATE TABLE IF NOT EXISTS municipios (
+		);`,
+		`CREATE TABLE IF NOT EXISTS municipios (
 			codigo VARCHAR(11),
 			descricao VARCHAR(255)
-		);
-
-		CREATE TABLE IF NOT EXISTS qualificacoes (
+		);`,
+		`CREATE TABLE IF NOT EXISTS qualificacoes (
 			codigo VARCHAR(11),
 			descricao VARCHAR(255)
-		);
-
-		CREATE TABLE IF NOT EXISTS naturezas (
+		);`,
+		`CREATE TABLE IF NOT EXISTS naturezas (
 			codigo VARCHAR(11),
 			descricao VARCHAR(255)
-		);
-		
-		CREATE TABLE IF NOT EXISTS cnaes (
+		);`,
+		`CREATE TABLE IF NOT EXISTS cnaes (
 			codigo VARCHAR(11),
 			descricao VARCHAR(255)
-		);
-
-		CREATE TABLE IF NOT EXISTS motivos (
+		);`,
+		`CREATE TABLE IF NOT EXISTS motivos (
 			codigo VARCHAR(11),
 			descricao VARCHAR(255)
-		);
-	`
+		);`,
+	}
 
-	DROP_TABLES = `
-		DROP TABLE empresas;
-		DROP TABLE estabelecimentos;
-		DROP TABLE simples;
-		DROP TABLE socios;
-		DROP TABLE paises;
-		DROP TABLE municipios;
-		DROP TABLE qualificacaosocios;
-		DROP TABLE naturezasjuridicas;
-		DROP TABLE cnaes;
-		DROP TABLE motivos;
-	`
+	TABLES_NAME_LIST = []string{
+		"empresas",
+		"estabelecimentos",
+		"simples",
+		"socios",
+		"paises",
+		"municipios",
+		"qualificacoes",
+		"naturezas",
+		"cnaes",
+		"motivos",
+	}
+
+	ALTER_CHARSET = "ALTER TABLE `%s` CONVERT TO CHARACTER SET %s COLLATE %s;"
+	ALTER_ENGINE  = "ALTER TABLE `%s` ENGINE=%s;"
+	DROP_TABLES   = "DROP TABLE IF EXISTS %s;"
 )
