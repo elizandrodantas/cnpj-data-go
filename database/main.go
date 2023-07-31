@@ -35,6 +35,8 @@ func Connect(opt *DatabaseConnectOptions) (*sqlx.DB, error) {
 
 	if strings.HasPrefix(opt.DriverName, "sqlite3") {
 		dataSource = fmt.Sprintf("file:%s.sqlite", opt.DatabaseName)
+	} else if strings.HasPrefix(opt.DriverName, "mysql") {
+		dataSource = fmt.Sprintf("%s:%s@tcp(%s)/%s", opt.User, opt.Pass, opt.Host, opt.DatabaseName)
 	} else {
 		dataSource = fmt.Sprintf("host=%s port=%d user=%s dbname=%s password=%s sslmode=%s", opt.Host, opt.Port, opt.User, opt.DatabaseName, opt.Pass, sslMode)
 	}
@@ -51,9 +53,60 @@ func CreateTables(client *sqlx.DB) (err error) {
 		return
 	}
 
-	_, err = client.Exec(CREATE_TABLES)
+	driver := client.DriverName()
+
+	if driver == "mysql" {
+		defer AlterEngine(client)
+		defer AlterCharset(client)
+	}
+
+	for i := 0; i < len(CREATE_TABLES); i++ {
+		_, err = client.Exec(CREATE_TABLES[i])
+
+		if err != nil {
+			return
+		}
+	}
 
 	return
+}
+
+func AlterEngine(client *sqlx.DB) (err error) {
+	err = client.Ping()
+
+	if err != nil {
+		return
+	}
+
+	for i := 0; i < len(TABLES_NAME_LIST); i++ {
+		row := fmt.Sprintf(ALTER_ENGINE, TABLES_NAME_LIST[i], "InnoDB")
+		_, err = client.Exec(row)
+
+		if err != nil {
+			return
+		}
+	}
+
+	return nil
+}
+
+func AlterCharset(client *sqlx.DB) (err error) {
+	err = client.Ping()
+
+	if err != nil {
+		return
+	}
+
+	for i := 0; i < len(TABLES_NAME_LIST); i++ {
+		row := fmt.Sprintf(ALTER_CHARSET, TABLES_NAME_LIST[i], "InnoDB")
+		_, err = client.Exec(row)
+
+		if err != nil {
+			return
+		}
+	}
+
+	return nil
 }
 
 func DropTables(client *sqlx.DB) (err error) {
@@ -63,7 +116,15 @@ func DropTables(client *sqlx.DB) (err error) {
 		return
 	}
 
-	_, err = client.Exec(DROP_TABLES)
+	for i := 0; i < len(TABLES_NAME_LIST); i++ {
+		row := fmt.Sprintf(DROP_TABLES, TABLES_NAME_LIST[i])
+
+		_, err = client.Exec(row)
+
+		if err != nil {
+			return
+		}
+	}
 
 	return
 }
