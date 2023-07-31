@@ -20,5 +20,5 @@
 # Go workspace file
 go.work
 
-# Test File
-./main.go
+# Databases
+assets

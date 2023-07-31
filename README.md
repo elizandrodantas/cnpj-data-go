@@ -44,7 +44,7 @@ Após a execução bem-sucedida do comando acima, será gerado um executável co
 4. **Execução do Projeto**: Agora que o projeto foi compilado, você pode executá-lo para iniciar o processo de extração e tratamento dos dados do CNPJ. Utilize o seguinte comando:
 
 ```bash
-./cnpj-gov-go -D <driver> -h <host> -u <usuario> -p <senha> -P <porta> -dbname <nome_do_banco> -ssl <modo_ssl>
+./cnpj-gov-go -D <driver> -h <host> -u <usuario> -p <senha> -P <porta> -dbname <nome_do_banco> -ssl <modo_ssl> -drop -F <pasta>
 ```
 
 As flags disponíveis são:
@@ -56,6 +56,12 @@ As flags disponíveis são:
 - `-P`: Porta para conexão com o banco de dados.
 - `-dbname`: Nome do banco de dados que será utilizado.
 - `-ssl`: Modo de conexão com SSL (caso seja necessário).
+
+### Novas flags adicionadas
+
+- `-drop`: Essa flag é responsável por fazer um drop em todas as tabelas do banco de dados. Ao utilizar essa opção, todas as informações existentes nas tabelas serão apagadas.
+
+- `-F <pasta>`: Essa flag permite fazer a migração do banco de dados a partir de um arquivo ao invés de fazer o download padrão. Você deve passar o valor correspondente à pasta em que se encontram os bancos a serem migrados. Os bancos estão disponíveis em [Dados Aberto](https://dados.gov.br/dados/conjuntos-dados/cadastro-nacional-da-pessoa-juridica---cnpj) -> Recursos.
 
 Nenhuma das flags é obrigatória. Caso você não forneça nenhuma delas, o projeto utilizará o banco de dados SQLite como padrão.
 
