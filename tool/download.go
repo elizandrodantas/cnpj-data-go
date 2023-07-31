@@ -1,13 +1,11 @@
 package tool
 
 import (
-	"archive/zip"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
 	"os"
-	"path"
 	"strings"
 )
 
@@ -113,73 +111,4 @@ func updateProgressDownload(read, total int64) {
 
 func (d *Download) GetZipPath() string {
 	return d.fileZipPath
-}
-
-func (d *Download) Unzip() ([]string, error) {
-	output := []string{}
-
-	if !d.downloaded {
-		return output, fmt.Errorf("download not completed")
-	}
-
-	zipFile, err := zip.OpenReader(d.fileZipPath)
-
-	if err != nil {
-		return output, fmt.Errorf("error open zip file: %s", err.Error())
-	}
-	defer zipFile.Close()
-
-	for _, z := range zipFile.File {
-		if z.Mode().IsDir() {
-			continue
-		}
-
-		fileRead, err := z.Open()
-		if err == nil {
-			defer fileRead.Close()
-
-			pathDest := path.Join(os.TempDir(), z.Name)
-
-			newFile, err := os.Create(pathDest)
-			if err != nil {
-				return output, err
-			}
-			defer newFile.Close()
-
-			_, err = io.Copy(newFile, fileRead)
-			if err != nil {
-				return output, err
-			}
-
-			output = append(output, pathDest)
-		}
-	}
-
-	return output, nil
-}
-
-func (d *Download) Delete(path string) error {
-	if _, err := os.Stat(path); err != nil {
-		return err
-	}
-
-	err := os.Remove(path)
-
-	return err
-}
-
-func (d *Download) DeleteMany(path []string) error {
-	for _, k := range path {
-		if _, err := os.Stat(k); err != nil {
-			return err
-		}
-
-		err := os.Remove(k)
-
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
 }
