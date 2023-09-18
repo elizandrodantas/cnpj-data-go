@@ -99,20 +99,6 @@ func splitLineData(data string) []string {
 }
 
 func replaceData(line string) string {
-	// rsplit := strings.Split(line, ";")
-	// rline := []string{}
-
-	// for _, value := range rsplit {
-	// 	value = strings.ReplaceAll(value, `"`, ``)
-	// 	value = strings.ReplaceAll(value, `'`, " ")
-	// 	value = strings.TrimSpace(value)
-
-	// 	value = fmt.Sprintf(`'%s'`, value)
-	// 	rline = append(rline, value)
-	// }
-
-	// return strings.Join(rline, ",")
-
 	return strings.ReplaceAll(line, ";", ",")
 }
 
