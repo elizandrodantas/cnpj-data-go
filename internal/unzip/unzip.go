@@ -21,7 +21,6 @@ func NewUnzip(p string) ([]string, error) {
 	}
 
 	zipFile, err := zip.OpenReader(p)
-
 	if err != nil {
 		return output, err
 	}
