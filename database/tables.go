@@ -10,7 +10,7 @@ var (
 			capital_social VARCHAR(50),
 			porte_empresa VARCHAR(3),
 			ente_federativo_resp VARCHAR(255)
-		)`,
+		);`,
 		`CREATE TABLE IF NOT EXISTS estabelecimentos (
 			cnpj_basico VARCHAR(8) NOT NULL,
 			cnpj_ordem VARCHAR(4),
@@ -89,6 +89,18 @@ var (
 			codigo VARCHAR(11),
 			descricao VARCHAR(255)
 		);`,
+
+		`CREATE INDEX idx_empresas_cnpj_basico ON empresas (cnpj_basico);`,
+		`CREATE INDEX idx_estabelecimentos_cnpj_basico ON estabelecimentos (cnpj_basico);`,
+		`CREATE INDEX idx_simples_cnpj_basico ON simples (cnpj_basico);`,
+		`CREATE INDEX idx_socios_cnpj_basico ON socios (cnpj_basico);`,
+
+		`CREATE INDEX idx_paises_codigo ON paises (codigo);`,
+		`CREATE INDEX idx_municipios_codigo ON municipios (codigo);`,
+		`CREATE INDEX idx_qualificacoes_codigo ON qualificacoes (codigo);`,
+		`CREATE INDEX idx_naturezas_codigo ON naturezas (codigo);`,
+		`CREATE INDEX idx_cnaes_codigo ON cnaes (codigo);`,
+		`CREATE INDEX idx_motivos_codigo ON motivos (codigo);`,
 	}
 
 	TABLES_NAME_LIST = []string{
