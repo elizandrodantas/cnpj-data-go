@@ -2,16 +2,36 @@ package migration
 
 import (
 	"fmt"
-	"strings"
+	"regexp"
+
+	"golang.org/x/text/encoding/charmap"
 )
+
+var replaceStringFunc = func(s string) string {
+	switch s {
+	case "'":
+		return "`"
+	case ";":
+		return ","
+	case "\"":
+		return "'"
+	case "\\":
+		return "/"
+	default:
+		return s
+	}
+}
 
 func parseInsertValues(d []string) []string {
 	var output []string
 
-	for _, k := range d {
-		parse := fmt.Sprintf("(%s)", strings.ReplaceAll(k, ";", ","))
+	regex := regexp.MustCompile(`[';"\\]`)
 
-		output = append(output, parse)
+	for _, k := range d {
+		parse := fmt.Sprintf("(%s)", regex.ReplaceAllStringFunc(k, replaceStringFunc))
+		utf8, _ := charmap.ISO8859_1.NewDecoder().String(parse)
+
+		output = append(output, utf8)
 	}
 
 	return output

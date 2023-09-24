@@ -48,6 +48,15 @@ func LenLines(name string) int64 {
 	return int64(len)
 }
 
+func Delete(name string) error {
+	if _, err := Stat(name); err != nil {
+		return err
+	}
+
+	err := os.Remove(name)
+	return err
+}
+
 func DeleteMany(paths []string) error {
 	for _, k := range paths {
 		if _, err := os.Stat(k); err != nil {
@@ -71,4 +80,30 @@ func OpenFile(name string) (*os.File, error) {
 	}
 
 	return file, err
+}
+
+func Stat(name string) (fs.FileInfo, error) {
+	file, err := os.Stat(name)
+	if err != nil {
+		return nil, err
+	}
+
+	return file, err
+}
+
+func ExistFile(name string) bool {
+	if _, err := Stat(name); err != nil {
+		return false
+	}
+
+	return true
+}
+
+func IsDir(name string) bool {
+	file, err := Stat(name)
+	if err != nil {
+		return false
+	}
+
+	return file.IsDir()
 }

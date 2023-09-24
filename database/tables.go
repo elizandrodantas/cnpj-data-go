@@ -2,7 +2,7 @@ package database
 
 var (
 	CREATE_TABLES = []string{
-		`CREATE TABLE IF NOT EXISTS empresas (
+		`CREATE TABLE empresas (
 			cnpj_basico VARCHAR(8) NOT NULL,
 			razao_social VARCHAR(255),
 			natureza VARCHAR(10),
@@ -11,10 +11,10 @@ var (
 			porte_empresa VARCHAR(3),
 			ente_federativo_resp VARCHAR(255)
 		);`,
-		`CREATE TABLE IF NOT EXISTS estabelecimentos (
+		`CREATE TABLE estabelecimentos (
 			cnpj_basico VARCHAR(8) NOT NULL,
 			cnpj_ordem VARCHAR(4),
-			cnpj_dv VARCHAR(2),
+			cnpj_dv VARCHAR(4),
 			identificador_tipo VARCHAR(1),
 			nome_fantasia VARCHAR(255),
 			situacao_cadastral VARCHAR(11),
@@ -24,26 +24,26 @@ var (
 			pais VARCHAR(11),
 			data_inicio_atividade VARCHAR(8),
 			cnae_principal VARCHAR(11),
-			cnae_secundario VARCHAR(255),
+			cnae_secundario TEXT,
 			tipo_logradouro VARCHAR(50),
-			logradouro VARCHAR(255),
+			logradouro TEXT,
 			numero VARCHAR(50),
 			complemento VARCHAR(255),
 			bairro VARCHAR(50),
 			cep VARCHAR(8),
-			uf VARCHAR(2),
+			uf VARCHAR(4),
 			municipio VARCHAR(11),
-			ddd1 VARCHAR(2),
+			ddd1 VARCHAR(4),
 			telefone1 VARCHAR(9),
-			ddd2 VARCHAR(2),
+			ddd2 VARCHAR(4),
 			telefone2 VARCHAR(9),
-			ddd_fax VARCHAR(2),
+			ddd_fax VARCHAR(4),
 			fax VARCHAR(10),
 			correio_eletronico VARCHAR(255),
 			situacao_especial VARCHAR(255),
 			data_situacao_especial VARCHAR(8)
 		);`,
-		`CREATE TABLE IF NOT EXISTS simples (
+		`CREATE TABLE simples (
 			cnpj_basico VARCHAR(8) NOT NULL,
 			opcao_simples VARCHAR(11),
 			data_opcao_simples VARCHAR(8),
@@ -52,7 +52,7 @@ var (
 			data_opcao_mei VARCHAR(8),
 			data_exclusao_mei VARCHAR(8)
 		);`,
-		`CREATE TABLE IF NOT EXISTS socios (
+		`CREATE TABLE socios (
 			cnpj_basico VARCHAR(8) NOT NULL,
 			identificador_socio VARCHAR(1),
 			nome VARCHAR(255),
@@ -65,27 +65,27 @@ var (
 			qualificacao_representante_legal VARCHAR(5),
 			faixa_etaria VARCHAR(5)
 		);`,
-		`CREATE TABLE IF NOT EXISTS paises (
+		`CREATE TABLE paises (
 			codigo VARCHAR(11),
 			descricao VARCHAR(255)
 		);`,
-		`CREATE TABLE IF NOT EXISTS municipios (
+		`CREATE TABLE municipios (
 			codigo VARCHAR(11),
 			descricao VARCHAR(255)
 		);`,
-		`CREATE TABLE IF NOT EXISTS qualificacoes (
+		`CREATE TABLE qualificacoes (
 			codigo VARCHAR(11),
 			descricao VARCHAR(255)
 		);`,
-		`CREATE TABLE IF NOT EXISTS naturezas (
+		`CREATE TABLE naturezas (
 			codigo VARCHAR(11),
 			descricao VARCHAR(255)
 		);`,
-		`CREATE TABLE IF NOT EXISTS cnaes (
+		`CREATE TABLE cnaes (
 			codigo VARCHAR(11),
 			descricao VARCHAR(255)
 		);`,
-		`CREATE TABLE IF NOT EXISTS motivos (
+		`CREATE TABLE motivos (
 			codigo VARCHAR(11),
 			descricao VARCHAR(255)
 		);`,

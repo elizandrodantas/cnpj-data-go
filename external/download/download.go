@@ -29,6 +29,9 @@ func Start(link string) (*download, error) {
 			req.URL.Opaque = req.URL.Path
 			return nil
 		},
+		Transport: &http.Transport{
+			DisableKeepAlives: true,
+		},
 	}
 
 	response, err := client.Get(link)

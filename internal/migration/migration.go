@@ -53,7 +53,7 @@ func (m *migration) Execute() error {
 		return fmt.Errorf("error ping client: %v", err)
 	}
 
-	dp := progress.NewProgressDefault(fmt.Sprintf("migrate to %s", m.table), m.length)
+	dp := progress.NewProgressDefault("migrating", m.length)
 
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
@@ -63,8 +63,6 @@ func (m *migration) Execute() error {
 		index = 0
 
 		data []string
-
-		totalMigrated = 0
 	)
 
 	for scanner.Scan() {
@@ -77,13 +75,21 @@ func (m *migration) Execute() error {
 				return err
 			}
 
-			totalMigrated += index
 			dp.Add(index)
 			index = 0
 			data = nil
+		}
+	}
 
+	if len(data) > 0 {
+		err := migrate(m.clientDB, data, m.table)
+		if err != nil {
+			return err
 		}
 
+		dp.Add(len(data))
+		index = 0
+		data = nil
 	}
 
 	if err := scanner.Err(); err != nil {
