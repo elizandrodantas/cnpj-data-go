@@ -44,24 +44,21 @@ Após a execução bem-sucedida do comando acima, será gerado um executável co
 4. **Execução do Projeto**: Agora que o projeto foi compilado, você pode executá-lo para iniciar o processo de extração e tratamento dos dados do CNPJ. Utilize o seguinte comando:
 
 ```bash
-./cnpj-gov-go -D <driver> -h <host> -u <usuario> -p <senha> -P <porta> -dbname <nome_do_banco> -ssl <modo_ssl> -drop -F <pasta>
+./cnpj-gov-go -D <driver> -host <host> -user <usuario> -pass <senha> -port <porta> -dbname <nome_do_banco> -ssl <modo_ssl> -F <pasta>
 ```
 
 As flags disponíveis são:
 
 - `-D`: Flag para selecionar o driver do banco de dados a ser utilizado. Opções possíveis: `sqlite3`, `mysql`, `postgres`. O padrão é `sqlite3` caso não seja especificado.
-- `-h`: Host do banco de dados.
-- `-u`: Nome do usuário para autenticação no banco de dados.
-- `-p`: Senha do usuário para autenticação no banco de dados.
-- `-P`: Porta para conexão com o banco de dados.
+- `-host`: Host do banco de dados.
+- `-user`: Nome do usuário para autenticação no banco de dados.
+- `-pass`: Senha do usuário para autenticação no banco de dados.
+- `-port`: Porta para conexão com o banco de dados.
 - `-dbname`: Nome do banco de dados que será utilizado.
 - `-ssl`: Modo de conexão com SSL (caso seja necessário).
-
-### Novas flags adicionadas
-
 - `-drop`: Essa flag é responsável por fazer um drop em todas as tabelas do banco de dados. Ao utilizar essa opção, todas as informações existentes nas tabelas serão apagadas.
-
 - `-F <pasta>`: Essa flag permite fazer a migração do banco de dados a partir de um arquivo ao invés de fazer o download padrão. Você deve passar o valor correspondente à pasta em que se encontram os bancos a serem migrados. Os bancos estão disponíveis em [Dados Aberto](https://dados.gov.br/dados/conjuntos-dados/cadastro-nacional-da-pessoa-juridica---cnpj) -> Recursos.
+- `-ignore-create-table`: Ignora a criação das tabelas.
 
 Nenhuma das flags é obrigatória. Caso você não forneça nenhuma delas, o projeto utilizará o banco de dados SQLite como padrão.
 
