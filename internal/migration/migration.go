@@ -47,6 +47,7 @@ func (m *migration) Execute() error {
 	if err != nil {
 		return err
 	}
+	defer file.Close()
 
 	err = m.clientDB.Ping()
 	if err != nil {

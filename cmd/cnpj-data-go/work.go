@@ -193,8 +193,6 @@ func execute(client *sqlx.DB, table string, zipPath string) (err error) {
 		"starting the migration of data to %s table\n",
 		ColorBoldInfo(table))
 
-	task := migration.NewMigration(client, table, unziped[0])
-	err = task.Execute()
-
+	err = migration.NewMigration(client, table, unziped[0]).Execute()
 	return
 }
